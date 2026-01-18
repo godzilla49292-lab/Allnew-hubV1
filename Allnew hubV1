@@ -1,0 +1,86 @@
+-- ลบ GUI เก่าออกก่อน
+local oldGui = game.CoreGui:FindFirstChild("AllnewHub")
+if oldGui then oldGui:Destroy() end
+
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "AllnewHub"
+ScreenGui.Parent = game:GetService("CoreGui")
+ScreenGui.ResetOnSpawn = false
+
+-- [ ตัวแปรหลัก ] --
+local flying = false
+local speedOn = false
+local player = game.Players.LocalPlayer
+
+-- กรอบเมนูหลัก (Main Frame)
+local MainFrame = Instance.new("Frame")
+MainFrame.Size = UDim2.new(0, 220, 0, 260)
+MainFrame.Position = UDim2.new(0.5, -110, 0.3, 0)
+MainFrame.BackgroundColor3 = Color3.fromRGB(25, 25, 25)
+MainFrame.Active = true
+MainFrame.Draggable = true
+MainFrame.Parent = ScreenGui
+
+-- หัวข้อ
+local Title = Instance.new("TextLabel")
+Title.Size = UDim2.new(1, 0, 0, 40)
+Title.Text = "Allnew Hub v2"
+Title.TextColor3 = Color3.fromRGB(255, 255, 255)
+Title.BackgroundColor3 = Color3.fromRGB(0, 120, 215)
+Title.Font = Enum.Font.GothamBold
+Title.TextSize = 16
+Title.Parent = MainFrame
+
+-- ปุ่มซ่อนเมนู (ปุ่มกากบาทเล็กๆ บนเมนูหลัก)
+local HideBtn = Instance.new("TextButton")
+HideBtn.Size = UDim2.new(0, 30, 0, 30)
+HideBtn.Position = UDim2.new(1, -35, 0, 5)
+HideBtn.Text = "-"
+HideBtn.BackgroundColor3 = Color3.fromRGB(60, 60, 60)
+HideBtn.TextColor3 = Color3.new(1, 1, 1)
+HideBtn.Parent = MainFrame
+
+-- ปุ่มโชว์เมนู (ปุ่มที่จะค้างอยู่บนจอเวลาซ่อน)
+local ShowBtn = Instance.new("TextButton")
+ShowBtn.Size = UDim2.new(0, 80, 0, 35)
+ShowBtn.Position = UDim2.new(0, 10, 0.5, 0) -- อยู่ด้านซ้ายกลางจอ
+ShowBtn.Text = "Show Allnew"
+ShowBtn.Visible = false -- เริ่มต้นไม่ให้เห็น
+ShowBtn.BackgroundColor3 = Color3.fromRGB(0, 120, 215)
+ShowBtn.TextColor3 = Color3.new(1, 1, 1)
+ShowBtn.Draggable = true -- ให้ลากปุ่มเล็กไปไว้ที่อื่นได้
+ShowBtn.Parent = ScreenGui
+
+-- [ ส่วนควบคุมความเร็วและบิน ] --
+local SpeedInput = Instance.new("TextBox")
+SpeedInput.Size = UDim2.new(0.8, 0, 0, 35)
+SpeedInput.Position = UDim2.new(0.1, 0, 0.22, 0)
+SpeedInput.PlaceholderText = "Speed (16-200)"
+SpeedInput.Text = "100"
+SpeedInput.Parent = MainFrame
+
+local SpeedBtn = Instance.new("TextButton")
+SpeedBtn.Size = UDim2.new(0.8, 0, 0, 40)
+SpeedBtn.Position = UDim2.new(0.1, 0, 0.42, 0)
+SpeedBtn.Text = "เปิดวิ่งเร็ว"
+SpeedBtn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+SpeedBtn.TextColor3 = Color3.new(1, 1, 1)
+SpeedBtn.Parent = MainFrame
+
+local FlyBtn = Instance.new("TextButton")
+FlyBtn.Size = UDim2.new(0.8, 0, 0, 40)
+FlyBtn.Position = UDim2.new(0.1, 0, 0.62, 0)
+FlyBtn.Text = "เปิดระบบบิน"
+FlyBtn.BackgroundColor3 = Color3.fromRGB(45, 45, 45)
+FlyBtn.TextColor3 = Color3.new(1, 1, 1)
+FlyBtn.Parent = MainFrame
+
+-- [ ระบบเปิด/ซ่อน ] --
+HideBtn.MouseButton1Click:Connect(function()
+	MainFrame.Visible = false
+	ShowBtn.Visible = true
+end)
+
+ShowBtn.MouseButton1Click:Connect(function()
+	MainFrame.Visible = true
+	ShowBtn
